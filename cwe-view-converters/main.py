@@ -14,8 +14,9 @@ def getWeaknessFromID(cwe_id):
     return weakness
 
 
-def xmlParse(filename):
-
+def parse_xml(filename):
+    print("parse xml")
+    exit()
     data = importXML(filename)
     global views
     views = data.find_all('Views')
@@ -45,11 +46,26 @@ class measureNode:
         self.positive = positive
         self.parents = parents
 
-if __name__ == "__main__":
+def parse_csv():
+    print("in parse csv")
+
+def main():
+    FUNCTION_MAP = {'xml': parse_xml,
+                    'csv': parse_csv}
     parser = argparse.ArgumentParser(
         prog='main.py',
-        description='This script converts a CWE view to a PIQUE model definition. Input is a ',
+        description='This script converts a CWE view to a PIQUE model definition. Input is a xml or csv file (exported from the MITRE CWE database), output is a partial PIQUE model definition file',
     )
+    parser.add_argument('-f', '--format', help='input format type [xml, csv]', choices=FUNCTION_MAP.keys())
+    parser.add_argument('-i', '--input_file', help='input filename, absolute or relative filepath')
+    parser.add_argument('-o', '--output', help='output filename, extension will be generated')
+    parser.add_argument('-v', '--version')
+    args = parser.parse_args()
+
+    if args["format"]:
+        print("format")
+
+if __name__ == "__main__":
+    main()
 
 
-    main(sys.argv[1])

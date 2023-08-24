@@ -1,5 +1,7 @@
 import sys
+import argparse
 from bs4 import BeautifulSoup
+
 
 
 def importXML(filename):
@@ -12,7 +14,8 @@ def getWeaknessFromID(cwe_id):
     return weakness
 
 
-def main(filename):
+def xmlParse(filename):
+
     data = importXML(filename)
     global views
     views = data.find_all('Views')
@@ -43,4 +46,10 @@ class measureNode:
         self.parents = parents
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        prog='main.py',
+        description='This script converts a CWE view to a PIQUE model definition. Input is a ',
+    )
+
+
     main(sys.argv[1])

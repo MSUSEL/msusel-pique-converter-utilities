@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 
 def importXML(filename):
-    with open(filename, 'r') as f:
+    with open(filename, encoding="utf-8") as f:
         return BeautifulSoup(f.read(), "xml")
 
 
@@ -27,15 +27,20 @@ def main(filename):
                 name = weakness['Name']
                 description = weakness.find('Description')
                 positive = False
+                for related_weakness in weakness.find_all('Related_Weaknesses'):
+                    print(related_weakness.find['CWE_ID'])
+                parents = ""
 
-                print(description)
+                weaknesses.update({cwe_id: measureNode(name, description, positive, parents)})
+
+                # print(description)
 
 class measureNode:
-    def __init__(self, name, description, positive, children):
+    def __init__(self, name, description, positive, parents):
         self.name = name
         self.description = description
         self.positive = positive
-        self.children = children
+        self.parents = parents
 
 if __name__ == "__main__":
     main(sys.argv[1])

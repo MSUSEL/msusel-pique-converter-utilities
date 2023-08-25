@@ -1,5 +1,6 @@
 import sys
 import argparse
+import pandas
 from bs4 import BeautifulSoup
 
 
@@ -14,10 +15,10 @@ def getWeaknessFromID(cwe_id):
     return weakness
 
 
-def parse_xml(filename):
+def parse_xml(input_file):
     print("parse xml")
     exit()
-    data = importXML(filename)
+    data = importXML(input_file)
     global views
     views = data.find_all('Views')
     global weaknesses
@@ -46,8 +47,12 @@ class measureNode:
         self.positive = positive
         self.parents = parents
 
-def parse_csv():
-    print("in parse csv")
+
+def parse_csv(input_file):
+    csv_df = pandas.read_csv(input_file)
+    csv_dict = csv_df.to_dict(orient='list')
+    print(csv_dict["CWE-ID"])
+
 
 def main():
     FUNCTION_MAP = {'xml': parse_xml,
@@ -61,9 +66,9 @@ def main():
     parser.add_argument('-o', '--output', help='output filename, extension will be generated')
     parser.add_argument('-v', '--version')
     args = parser.parse_args()
+    process = FUNCTION_MAP[args.format]
+    process(args.input_file)
 
-    if args["format"]:
-        print("format")
 
 if __name__ == "__main__":
     main()

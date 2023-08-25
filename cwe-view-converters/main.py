@@ -1,6 +1,6 @@
 import sys
 import argparse
-import pandas
+import csv
 from bs4 import BeautifulSoup
 
 
@@ -36,22 +36,28 @@ def parse_xml(input_file):
                     print(related_weakness.find['CWE_ID'])
                 parents = ""
 
-                weaknesses.update({cwe_id: measureNode(name, description, positive, parents)})
+                weaknesses.update({cwe_id: MeasureNode(name, description, positive, parents)})
 
                 # print(description)
 
-class measureNode:
-    def __init__(self, name, description, positive, parents):
+class MeasureNode:
+    def __init__(self, cwe_id, name, description, children):
+        self.cwe_id = cwe_id
         self.name = name
         self.description = description
-        self.positive = positive
-        self.parents = parents
+        self.children = children
 
 
 def parse_csv(input_file):
-    csv_df = pandas.read_csv(input_file)
-    csv_dict = csv_df.to_dict(orient='list')
-    print(csv_dict["CWE-ID"])
+    tree = {}
+    with open(input_file, encoding="utf8") as csvfile:
+        csv_reader = csv.reader(csvfile, delimiter=',')
+        for row in csv_reader:
+            id = row[0]
+            name = row[1]
+            description = row[4]
+            tree.update({row[0]: MeasureNode(id, name, description, )})
+        #print(tree)
 
 
 def main():

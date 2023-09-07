@@ -12,9 +12,12 @@ def parse_xml(input_file):
 
 
 def export_to_json(output_file, model_definition):
+    class ComplexEncoder(json.JSONEncoder):
+        def default(self, obj):
+            return obj.__dict__
+
     with open(output_file, "w", encoding="utf8") as json_output:
-        print(json.dumps(model_definition, default=vars))
-        # print(json.dumps(model_definition.__dict__, indent=2), file=json_output)
+        print(json.dumps(model_definition, indent=2, cls=ComplexEncoder), file=json_output)
 
 
 
@@ -62,9 +65,7 @@ def main():
     args = parser.parse_args()
     process = FUNCTION_MAP[args.format]
     tree = process(args.input_file)
-    model_definition = JSONRoot(args.model_name, {}, {}, {}, tree.values(), {})
-    print(type(model_definition.measures))
-    exit(0)
+    model_definition = JSONRoot(args.model_name, {"additionalData": {}}, {"global_config": {}}, {"factors": {}}, list(tree.values()), {"diagnostics": {}})
     export_to_json(args.output, model_definition)
 
 

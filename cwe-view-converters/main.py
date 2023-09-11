@@ -1,9 +1,23 @@
-import sys
+import os
 import re
 import argparse
 import csv
 import json
 from pathlib import Path
+
+# naming conventions built after the json they need to be exported to.
+additionalData = {}
+
+global_config = {
+    "benchmark_strategy": "pique.calibration.MeanSDBenchmarker",
+    "normalizer": "pique.evaluation.NoNormalizer",
+    "weights_strategy": "calibration.BinaryCWEWeighter"
+}
+
+eval_strategies = {
+    "quality_aspect": "evaluator.QualityAspectEvaluator",
+    "product_factor": "evaluator.WeightedAverageEvaluator"
+}
 
 
 def parse_xml(input_file):
@@ -18,7 +32,6 @@ def export_to_json(output_file, model_definition):
 
     with open(output_file, "w", encoding="utf8") as json_output:
         print(json.dumps(model_definition, indent=2, cls=ComplexEncoder), file=json_output)
-
 
 
 # MITRES's CWE csv export does not include parent info, just children info. Not sure about the xml yet..
@@ -48,24 +61,50 @@ def parse_csv(input_file):
             tree.update({id: MeasureNode(id, name, weakness_abstraction, description, children_ids)})
     return tree
 
+
+def build_tqi(model_name):
+    tqi = {model_name: {
+        "description": "Model description, replace with a description of your model"
+    }
+    }
+    return tqi
+
+
+def build_quality_aspects():
+    quality_aspects = {
+
+    }
+
+
 def main():
-    FUNCTION_MAP = {'xml': parse_xml,
-                    'csv': parse_csv}
+    FUNCTION_MAP = {'.xml': parse_xml,
+                    '.csv': parse_csv}
     parser = argparse.ArgumentParser(
         prog='main.py',
         description='This script converts a CWE view to a PIQUE model definition. '
                     'Input is a xml or csv file (exported from the MITRE CWE database), '
                     'output is a partial PIQUE model definition file',
     )
-    parser.add_argument('-f', '--format', help='input format type [xml, csv]', choices=FUNCTION_MAP.keys())
     parser.add_argument('-i', '--input_file', help='input filename, absolute or relative filepath')
     parser.add_argument('-m', '--model_name', help='name of the model')
     parser.add_argument('-o', '--output', help='output filename, extension will be generated')
+    parser.add_argument('-qa', '--quality_aspects', help='Selection of quality aspect nodes. Two quality aspect '
+                                                         'groups are included in this release, the ISO 25010 quality '
+                                                         'aspects and the Microsoft STRIDE quality aspects. Options '
+                                                         'are \'ISO\' for ISO 25010 and \'STRIDE\' for Microsoft '
+                                                         'STRIDE. Default is ISO 25010', choices={'ISO', 'STRIDE'})
     parser.add_argument('-v', '--version')
     args = parser.parse_args()
-    process = FUNCTION_MAP[args.format]
+    extension = os.path.splitext(args.input_file)
+    process = FUNCTION_MAP[extension[1]]
     tree = process(args.input_file)
-    model_definition = JSONRoot(args.model_name, {"additionalData": {}}, {"global_config": {}}, {"factors": {}}, list(tree.values()), {"diagnostics": {}})
+
+    tqi = build_tqi(args.model_name)
+
+    factors = FactorNode(tqi, {}, {})
+
+    model_definition = JSONRoot(args.model_name, additionalData, global_config, factors, list(tree.values()),
+                                {"diagnostics": {}})
     export_to_json(args.output, model_definition)
 
 
@@ -80,6 +119,13 @@ class JSONRoot:
 
     def __str__(self):
         return self.name
+
+
+class FactorNode:
+    def __init__(self, tqi, quality_aspects, product_factors):
+        self.tqi = tqi
+        self.quality_aspects = quality_aspects
+        self.product_factors = product_factors
 
 
 class MeasureNode:

@@ -70,15 +70,96 @@ def build_tqi(model_name):
     return tqi
 
 
-def build_quality_aspects():
+def build_iso_quality_aspects():
     quality_aspects = {
-
+        "Functional Suitability": {
+            "description": "Degree to which a product or system provides functions that meet stated and implied needs "
+                           "when used under specified conditions",
+            "eval_strategy": eval_strategies['quality_aspect']
+        },
+        "Performance Efficiency": {
+            "description": "Performance relative to the amount of resources used under stated conditions",
+            "eval_strategy": eval_strategies['quality_aspect']
+        },
+        "Usability": {
+            "description": "Degree to which a product or system can be used by specified users to achieve specified "
+                           "goals with effectiveness, efficiency and satisfaction in a specified context of use",
+            "eval_strategy": eval_strategies['quality_aspect']
+        },
+        "Compatibility": {
+            "description": "Degree to which a product, system or component can exchange information with other "
+                           "products, systems or components, and/or perform its required functions, while sharing the "
+                           "same hardware or software environment",
+            "eval_strategy": eval_strategies['quality_aspect']
+        },
+        "Reliability": {
+            "description": "Degree to which a system, product or component performs specified functions under "
+                           "specified conditions for a specified period of time",
+            "eval_strategy": eval_strategies['quality_aspect']
+        },
+        "Security": {
+            "description": "Degree to which a product or system protects information and data so that persons or "
+                           "other products or systems have the degree of data access appropriate to their types and "
+                           "levels of authorization",
+            "eval_strategy": eval_strategies['quality_aspect']
+        },
+        "Maintainability": {
+            "description": "Degree of effectiveness and efficiency with which a product or system can be modified by "
+                           "the intended maintainers",
+            "eval_strategy": eval_strategies['quality_aspect']
+        },
+        "Portability": {
+            "description": "degree of effectiveness and efficiency with which a system, product or component can be "
+                           "transferred from one hardware, software or other operational or usage environment to "
+                           "another",
+            "eval_strategy": eval_strategies['quality_aspect']
+        }
     }
+    return quality_aspects
+
+
+def build_stride_quality_aspects():
+    quality_aspects = {
+        "Confidentiality": {
+            "description": "Information is not made available or disclosed to unauthorized individuals, entities, "
+                           "or processes.",
+            "eval_strategy": eval_strategies['quality_aspect']
+        },
+        "Integrity": {
+            "description": "Data or processes cannot be modified in an unauthorized way.",
+            "eval_strategy": eval_strategies['quality_aspect']
+        },
+        "Availability": {
+            "description": "Data and processes should be available at all times when deemed necessary.",
+            "eval_strategy": eval_strategies['quality_aspect']
+        },
+        "Authenticity": {
+            "description": "Identity of individuals, entities, or processes is verified correctly.",
+            "eval_strategy": eval_strategies['quality_aspect']
+        },
+        "Authorization": {
+            "description": "individuals, entities, or processes only have access to data and processes they should.",
+            "eval_strategy": eval_strategies['quality_aspect']
+        },
+        "Non-repudiation": {
+            "description": "Individuals, entities, or processes may not deny any actions they performed.",
+            "eval_strategy": eval_strategies['quality_aspect']
+        }
+    }
+    return quality_aspects
+
+
+def build_product_factors_from_cwe_pillars(tree):
+    # I need to do 2 things here: (1) find Pillars, assign them to CWE. (2) remove those pillars from the tree
+    # find pillars
+
 
 
 def main():
-    FUNCTION_MAP = {'.xml': parse_xml,
-                    '.csv': parse_csv}
+    PARSE_FUNCTION_MAP = {'.xml': parse_xml,
+                          '.csv': parse_csv}
+    QUALITY_ASPECT_FUNCTION_MAP = {'ISO': build_iso_quality_aspects,
+                                   'STRIDE': build_stride_quality_aspects}
     parser = argparse.ArgumentParser(
         prog='main.py',
         description='This script converts a CWE view to a PIQUE model definition. '
@@ -86,24 +167,34 @@ def main():
                     'output is a partial PIQUE model definition file',
     )
     parser.add_argument('-i', '--input_file', help='input filename, absolute or relative filepath')
-    parser.add_argument('-m', '--model_name', help='name of the model')
+    parser.add_argument('-n', '--name', help='name of the model', default="UNNAMED MODEL")
     parser.add_argument('-o', '--output', help='output filename, extension will be generated')
+    parser.add_argument('--custom_product_factors', help='True/False flag to specify if the quality model '
+                                                         'should be generated using custom product factors, '
+                                                         'and not CWE pillars as product factors which is default.',
+                        default=False,
+                        action='store_true')
     parser.add_argument('-qa', '--quality_aspects', help='Selection of quality aspect nodes. Two quality aspect '
                                                          'groups are included in this release, the ISO 25010 quality '
                                                          'aspects and the Microsoft STRIDE quality aspects. Options '
                                                          'are \'ISO\' for ISO 25010 and \'STRIDE\' for Microsoft '
-                                                         'STRIDE. Default is ISO 25010', choices={'ISO', 'STRIDE'})
+                                                         'STRIDE. Default is ISO 25010', choices={'ISO', 'STRIDE'},
+                        default='ISO')
     parser.add_argument('-v', '--version')
     args = parser.parse_args()
     extension = os.path.splitext(args.input_file)
-    process = FUNCTION_MAP[extension[1]]
+    process = PARSE_FUNCTION_MAP[extension[1]]
     tree = process(args.input_file)
+    tqi = build_tqi(args.name)
+    quality_aspect_func = QUALITY_ASPECT_FUNCTION_MAP[args.quality_aspects]
+    quality_aspects = quality_aspect_func()
+    product_factors = {}
+    if not args.custom_product_factors:
+        product_factors = build_product_factors_from_cwe_pillars(tree)
 
-    tqi = build_tqi(args.model_name)
+    factors = FactorNode(tqi, quality_aspects, product_factors)
 
-    factors = FactorNode(tqi, {}, {})
-
-    model_definition = JSONRoot(args.model_name, additionalData, global_config, factors, list(tree.values()),
+    model_definition = JSONRoot(args.name, additionalData, global_config, factors, list(tree.values()),
                                 {"diagnostics": {}})
     export_to_json(args.output, model_definition)
 

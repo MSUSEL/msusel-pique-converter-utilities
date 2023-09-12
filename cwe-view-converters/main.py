@@ -34,32 +34,6 @@ def export_to_json(output_file, model_definition):
         print(json.dumps(model_definition, indent=2, cls=ComplexEncoder), file=json_output)
 
 
-# MITRES's CWE csv export does not include parent info, just children info. Not sure about the xml yet..
-def parse_relationship(related_weaknesses, relationship, filename):
-    # double colon delineated, this regex handles it
-    children_ids = []
-    # only match on the view id coming from the filename. This ensures we get the correct child for the CWE view
-    for related_weaknesses_iter in re.finditer('::NATURE:' + relationship + ':CWE ID:(.\d*):VIEW ID:' + filename,
-                                               related_weaknesses):
-        children_ids.append(related_weaknesses_iter.group(1))
-    return children_ids
-
-
-def parse_csv(input_file):
-    tree = {}
-    with open(input_file, encoding="utf8") as csvfile:
-        filename = Path(input_file).stem
-        csv_reader = csv.reader(csvfile, delimiter=',')
-        next(csv_reader, None)  # skip the headers
-        for row in csv_reader:
-            id = row[0]
-            name = row[1]
-            weakness_abstraction = row[2]
-            description = row[4]
-            related_weaknesses = row[6]
-            children_ids = parse_relationship(related_weaknesses, "ChildOf", filename)
-            tree.update({id: MeasureNode(id, name, weakness_abstraction, description, children_ids)})
-    return tree
 
 
 def build_tqi(model_name):
@@ -149,10 +123,59 @@ def build_stride_quality_aspects():
     return quality_aspects
 
 
+# MITRES's CWE csv export does not include parent info, just children info. Not sure about the xml yet..
+def parse_relationship(related_weaknesses, relationship, filename):
+    # double colon delineated, this regex handles it
+    children_ids = []
+    # only match on the view id coming from the filename. This ensures we get the correct child for the CWE view
+    for related_weaknesses_iter in re.finditer('::NATURE:' + relationship + ':CWE ID:(.\d*):VIEW ID:' + filename,
+                                               related_weaknesses):
+        children_ids.append(related_weaknesses_iter.group(1))
+    return children_ids
+
+
+def parse_csv(input_file):
+    tree = {}
+    with open(input_file, encoding="utf8") as csvfile:
+        filename = Path(input_file).stem
+        csv_reader = csv.reader(csvfile, delimiter=',')
+        next(csv_reader, None)  # skip the headers
+        for row in csv_reader:
+            id = row[0]
+            name = row[1]
+            weakness_abstraction = row[2]
+            description = row[4]
+            related_weaknesses = row[6]
+            # careful here because the 'childof' tag refers to parents.
+            parent_ids = parse_relationship(related_weaknesses, "ChildOf", filename)
+            tree.update({id: CWENode(id, name, weakness_abstraction, description, parent_ids, [])})
+    return tree
+
+
 def build_product_factors_from_cwe_pillars(tree):
     # I need to do 2 things here: (1) find Pillars, assign them to CWE. (2) remove those pillars from the tree
     # find pillars
+    product_factors = {}
+    for node in tree.values():
+        if len(node.parents) == 0:
+            # convert node.children to dict
+            children_dict = {element: {} for index, element in enumerate(node.children)}
+            product_factors.update({node.weakness_abstraction + " " + node.cwe_id: ProductFactorNode(node.name, node.description, eval_strategies['product_factor'], children_dict)})
+    return product_factors
 
+
+def convert_cwe_to_measures(tree):
+    measures = {}
+    for node in tree.values():
+        children_dict = {element: {} for index, element in enumerate(node.children)}
+        measures.update({node.cwe_id: MeasureNode(node.name, node.weakness_abstraction, node.description, children_dict)})
+    return measures
+
+
+def stitch_together_children(tree):
+    for node in tree.values():
+        for parentNode in node.parents:
+            tree[parentNode].children.append(node.cwe_id)
 
 
 def main():
@@ -184,19 +207,31 @@ def main():
     args = parser.parse_args()
     extension = os.path.splitext(args.input_file)
     process = PARSE_FUNCTION_MAP[extension[1]]
+    # tree is a tree of CWENodes, NOT of MeasureNodes
     tree = process(args.input_file)
+    # the parsing process returns nodes with a parent id, not a child id which is needed for PIQUE.
+    stitch_together_children(tree)
     tqi = build_tqi(args.name)
     quality_aspect_func = QUALITY_ASPECT_FUNCTION_MAP[args.quality_aspects]
     quality_aspects = quality_aspect_func()
     product_factors = {}
     if not args.custom_product_factors:
         product_factors = build_product_factors_from_cwe_pillars(tree)
-
     factors = FactorNode(tqi, quality_aspects, product_factors)
+    measures = convert_cwe_to_measures(tree)
 
-    model_definition = JSONRoot(args.name, additionalData, global_config, factors, list(tree.values()),
-                                {"diagnostics": {}})
+    model_definition = JSONRoot(args.name, additionalData, global_config, factors, measures, {"diagnostics": {}})
     export_to_json(args.output, model_definition)
+
+
+class CWENode:
+    def __init__(self, cwe_id, name, weakness_abstraction, description, parents, children):
+        self.cwe_id = "CWE-" + cwe_id
+        self.name = name
+        self.weakness_abstraction = weakness_abstraction
+        self.description = description
+        self.parents = parents
+        self.children = children
 
 
 class JSONRoot:
@@ -219,9 +254,16 @@ class FactorNode:
         self.product_factors = product_factors
 
 
+class ProductFactorNode:
+    def __init__(self, name, description, eval_strategy, children):
+        self.name = name
+        self.description = description
+        self.eval_strategy = eval_strategy
+        self.children = children
+
+
 class MeasureNode:
-    def __init__(self, cwe_id, name, weakness_abstraction, description, children):
-        self.cwe_id = cwe_id
+    def __init__(self, name, weakness_abstraction, description, children):
         self.name = name
         self.positive = "false"
         self.weakness_abstraction = weakness_abstraction

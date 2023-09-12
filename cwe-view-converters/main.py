@@ -164,13 +164,19 @@ def build_product_factors_from_cwe_pillars(tree):
     return product_factors
 
 
-def convert_cwe_to_measures(tree):
+def build_measures_from_cwe_tree(tree):
     measures = {}
     for node in tree.values():
         children_dict = {element: {} for index, element in enumerate(node.children)}
         measures.update({node.cwe_id: MeasureNode(node.name, node.weakness_abstraction, node.description, children_dict)})
     return measures
 
+
+def build_diagnostics_from_measures(measures):
+    diagnostics = {}
+    for cwe_id in measures.keys():
+        diagnostics.update({cwe_id + " Diagnostic": {"toolname": "TODO", "description": "Sum of findings of type " + cwe_id}})
+    return diagnostics
 
 def stitch_together_children(tree):
     for node in tree.values():
@@ -218,9 +224,9 @@ def main():
     if not args.custom_product_factors:
         product_factors = build_product_factors_from_cwe_pillars(tree)
     factors = FactorNode(tqi, quality_aspects, product_factors)
-    measures = convert_cwe_to_measures(tree)
-
-    model_definition = JSONRoot(args.name, additionalData, global_config, factors, measures, {"diagnostics": {}})
+    measures = build_measures_from_cwe_tree(tree)
+    diagnostics = build_diagnostics_from_measures(measures)
+    model_definition = JSONRoot(args.name, additionalData, global_config, factors, measures, diagnostics)
     export_to_json(args.output, model_definition)
 
 

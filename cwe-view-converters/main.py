@@ -147,6 +147,7 @@ def parse_csv(input_file):
             description = row[4]
             related_weaknesses = row[6]
             # careful here because the 'childof' tag refers to parents.
+            # CWE 699 will use the keyword 'MemberOf'
             parent_ids = parse_relationship(related_weaknesses, "ChildOf", filename)
             tree.update({id: CWENode(id, name, weakness_abstraction, description, parent_ids, [])})
     return tree
@@ -175,8 +176,12 @@ def build_measures_from_cwe_tree(tree):
 def build_diagnostics_from_measures(measures):
     diagnostics = {}
     for cwe_id in measures.keys():
-        diagnostics.update({cwe_id + " Diagnostic": {"toolname": "TODO", "description": "Sum of findings of type " + cwe_id}})
+        diagnostic_name = cwe_id + " Diagnostic"
+        diagnostics.update({diagnostic_name: {"toolname": "TODO", "description": "Sum of findings of type " + cwe_id}})
+        # after building the diagnostic node I still need to add the node as the child of the measure
+        measures[cwe_id].children.update({diagnostic_name: {}})
     return diagnostics
+
 
 def stitch_together_children(tree):
     for node in tree.values():

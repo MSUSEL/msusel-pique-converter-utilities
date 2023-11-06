@@ -9,14 +9,14 @@ from pathlib import Path
 additionalData = {}
 
 global_config = {
-    "benchmark_strategy": "pique.calibration.MeanSDBenchmarker",
+    "benchmark_strategy": "pique.calibration.NaiveBenchmarker",
     "normalizer": "pique.evaluation.NoNormalizer",
-    "weights_strategy": "calibration.BinaryCWEWeighter"
+    "weights_strategy": "pique.calibration.NaiveWeighter"
 }
 
 eval_strategies = {
-    "quality_aspect": "evaluator.QualityAspectEvaluator",
-    "product_factor": "evaluator.WeightedAverageEvaluator"
+    "quality_aspect": "pique.evaluation.DefaultFactorEvaluator",
+    "product_factor": "pique.evaluation.DefaultProductFactorEvaluator"
 }
 
 
@@ -32,8 +32,7 @@ def export_to_json(output_file, model_definition):
 
     with open(output_file, "w", encoding="utf8") as json_output:
         print(json.dumps(model_definition, indent=2, cls=ComplexEncoder), file=json_output)
-
-
+    print("Output finished, view the generated model definition at path: " + output_file)
 
 
 def build_tqi(model_name):
@@ -161,7 +160,11 @@ def build_product_factors_from_cwe_pillars(tree):
         if len(node.parents) == 0:
             # convert node.children to dict
             children_dict = {element: {} for index, element in enumerate(node.children)}
-            product_factors.update({node.weakness_abstraction + " " + node.cwe_id: ProductFactorNode(node.name, node.description, eval_strategies['product_factor'], children_dict)})
+            product_factors.update({node.weakness_abstraction + " " + node.cwe_id: ProductFactorNode(node.name,
+                                                                                                     node.description,
+                                                                                                     eval_strategies[
+                                                                                                         'product_factor'],
+                                                                                                     children_dict)})
     return product_factors
 
 
@@ -169,17 +172,21 @@ def build_measures_from_cwe_tree(tree):
     measures = {}
     for node in tree.values():
         children_dict = {element: {} for index, element in enumerate(node.children)}
-        measures.update({node.cwe_id: MeasureNode(node.name, node.weakness_abstraction, node.description, children_dict)})
+        measures.update(
+            {node.cwe_id: MeasureNode(node.name, node.weakness_abstraction, node.description, children_dict)})
     return measures
 
 
-def build_diagnostics_from_measures(measures):
+def build_diagnostics_from_measures(measures, number_of_tools):
     diagnostics = {}
-    for cwe_id in measures.keys():
-        diagnostic_name = cwe_id + " Diagnostic"
-        diagnostics.update({diagnostic_name: {"toolname": "TODO", "description": "Sum of findings of type " + cwe_id}})
-        # after building the diagnostic node I still need to add the node as the child of the measure
-        measures[cwe_id].children.update({diagnostic_name: {}})
+    for tool_id in range(int(number_of_tools)):
+        tool_name_id = "tool-name-" + str(tool_id)
+        for cwe_id in measures.keys():
+            diagnostic_name = cwe_id + " Diagnostic " + tool_name_id
+            diagnostics.update(
+                {diagnostic_name: {"toolname": tool_name_id, "description": "Sum of findings of type " + cwe_id}})
+            # after building the diagnostic node I still need to add the node as the child of the measure
+            measures[cwe_id].children.update({diagnostic_name: {}})
     return diagnostics
 
 
@@ -205,7 +212,7 @@ def main():
     parser.add_argument('-o', '--output', help='output filename, extension will be generated')
     parser.add_argument('--custom_product_factors', help='True/False flag to specify if the quality model '
                                                          'should be generated using custom product factors, '
-                                                         'and not CWE pillars as product factors which is default.',
+                                                         'and not CWE pillars as product factors which is default. Default is false.',
                         default=False,
                         action='store_true')
     parser.add_argument('-qa', '--quality_aspects', help='Selection of quality aspect nodes. Two quality aspect '
@@ -214,6 +221,13 @@ def main():
                                                          'are \'ISO\' for ISO 25010 and \'STRIDE\' for Microsoft '
                                                          'STRIDE. Default is ISO 25010', choices={'ISO', 'STRIDE'},
                         default='ISO')
+    parser.add_argument('-t', '--number_of_tools',
+                        help='The number of tools you are using in your model, as an integer. This number dictates '
+                             'the number of diagnostic nodes that are produced, and each diagnostic node is linked to '
+                             'a tool directly. For example, if you supply 2 for this argument, you will receive each '
+                             'Diagnostic twice. Each Diagnostic will be named as '
+                             '\'Diagnostic-<Diagnostic ID>-tool-name-<tool_number>\'. Default value is 1.',
+                        default=1)
     parser.add_argument('-v', '--version')
     args = parser.parse_args()
     extension = os.path.splitext(args.input_file)
@@ -230,7 +244,7 @@ def main():
         product_factors = build_product_factors_from_cwe_pillars(tree)
     factors = FactorNode(tqi, quality_aspects, product_factors)
     measures = build_measures_from_cwe_tree(tree)
-    diagnostics = build_diagnostics_from_measures(measures)
+    diagnostics = build_diagnostics_from_measures(measures, args.number_of_tools)
     model_definition = JSONRoot(args.name, additionalData, global_config, factors, measures, diagnostics)
     export_to_json(args.output, model_definition)
 

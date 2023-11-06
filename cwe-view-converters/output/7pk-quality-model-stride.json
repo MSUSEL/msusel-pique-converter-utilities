@@ -1,0 +1,1625 @@
+{
+  "name": "PIQUE Cloud quality model 7PK",
+  "additionalData": {},
+  "global_config": {
+    "benchmark_strategy": "pique.calibration.MeanSDBenchmarker",
+    "normalizer": "pique.evaluation.NoNormalizer",
+    "weights_strategy": "calibration.BinaryCWEWeighter"
+  },
+  "factors": {
+    "tqi": {
+      "PIQUE Cloud quality model 7PK": {
+        "description": "Model description, replace with a description of your model"
+      }
+    },
+    "quality_aspects": {
+      "Confidentiality": {
+        "description": "Information is not made available or disclosed to unauthorized individuals, entities, or processes.",
+        "eval_strategy": "evaluator.QualityAspectEvaluator"
+      },
+      "Integrity": {
+        "description": "Data or processes cannot be modified in an unauthorized way.",
+        "eval_strategy": "evaluator.QualityAspectEvaluator"
+      },
+      "Availability": {
+        "description": "Data and processes should be available at all times when deemed necessary.",
+        "eval_strategy": "evaluator.QualityAspectEvaluator"
+      },
+      "Authenticity": {
+        "description": "Identity of individuals, entities, or processes is verified correctly.",
+        "eval_strategy": "evaluator.QualityAspectEvaluator"
+      },
+      "Authorization": {
+        "description": "individuals, entities, or processes only have access to data and processes they should.",
+        "eval_strategy": "evaluator.QualityAspectEvaluator"
+      },
+      "Non-repudiation": {
+        "description": "Individuals, entities, or processes may not deny any actions they performed.",
+        "eval_strategy": "evaluator.QualityAspectEvaluator"
+      }
+    },
+    "product_factors": {
+      "Variant CWE-5": {
+        "name": "J2EE Misconfiguration: Data Transmission Without Encryption",
+        "description": "Information sent over a network can be compromised while in transit. An attacker may be able to read or modify the contents if the data are sent in plaintext or are weakly encrypted.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-6": {
+        "name": "J2EE Misconfiguration: Insufficient Session-ID Length",
+        "description": "The J2EE application is configured to use an insufficient session ID length.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-7": {
+        "name": "J2EE Misconfiguration: Missing Custom Error Page",
+        "description": "The default error page of a web application should not display sensitive information about the product.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-8": {
+        "name": "J2EE Misconfiguration: Entity Bean Declared Remote",
+        "description": "When an application exposes a remote interface for an entity bean, it might also expose methods that get or set the bean's data. These methods could be leveraged to read sensitive information, or to change data in ways that violate the application's expectations, potentially leading to other vulnerabilities.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-9": {
+        "name": "J2EE Misconfiguration: Weak Access Permissions for EJB Methods",
+        "description": "If elevated access rights are assigned to EJB methods, then an attacker can take advantage of the permissions to exploit the product.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-11": {
+        "name": "ASP.NET Misconfiguration: Creating Debug Binary",
+        "description": "Debugging messages help attackers learn about the system and plan a form of attack.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-12": {
+        "name": "ASP.NET Misconfiguration: Missing Custom Error Page",
+        "description": "An ASP .NET application must enable custom error pages in order to prevent attackers from mining information from the framework's built-in responses.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-13": {
+        "name": "ASP.NET Misconfiguration: Password in Configuration File",
+        "description": "Storing a plaintext password in a configuration file allows anyone who can read the file access to the password-protected resource making them an easy target for attackers.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-14": {
+        "name": "Compiler Removal of Code to Clear Buffers",
+        "description": "Sensitive memory is cleared according to the source code, but compiler optimizations leave the memory untouched when it is not read from again, aka dead store removal.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Class CWE-20": {
+        "name": "Improper Input Validation",
+        "description": "The product receives input or data, but it does not validate or incorrectly validates that the input has the properties that are required to process the data safely and correctly.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {
+          "CWE-15": {},
+          "CWE-73": {},
+          "CWE-102": {},
+          "CWE-103": {},
+          "CWE-104": {},
+          "CWE-105": {},
+          "CWE-106": {},
+          "CWE-107": {},
+          "CWE-108": {},
+          "CWE-109": {},
+          "CWE-110": {},
+          "CWE-111": {},
+          "CWE-112": {},
+          "CWE-113": {},
+          "CWE-114": {},
+          "CWE-117": {},
+          "CWE-119": {},
+          "CWE-120": {},
+          "CWE-134": {},
+          "CWE-170": {},
+          "CWE-190": {},
+          "CWE-466": {},
+          "CWE-470": {},
+          "CWE-785": {}
+        }
+      },
+      "Class CWE-77": {
+        "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')",
+        "description": "The product constructs all or part of a command using externally-influenced input from an upstream component, but it does not neutralize or incorrectly neutralizes special elements that could modify the intended command when it is sent to a downstream component.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-79": {
+        "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+        "description": "The product does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-89": {
+        "name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+        "description": "The product constructs all or part of an SQL command using externally-influenced input from an upstream component, but it does not neutralize or incorrectly neutralizes special elements that could modify the intended SQL command when it is sent to a downstream component.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Class CWE-99": {
+        "name": "Improper Control of Resource Identifiers ('Resource Injection')",
+        "description": "The product receives input from an upstream component, but it does not restrict or incorrectly restricts the input before it is used as an identifier for a resource that may be outside the intended sphere of control.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-242": {
+        "name": "Use of Inherently Dangerous Function",
+        "description": "The product calls a function that can never be guaranteed to work safely.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-243": {
+        "name": "Creation of chroot Jail Without Changing Working Directory",
+        "description": "The product uses the chroot() system call to create a jail, but does not change the working directory afterward. This does not prevent access to files outside of the jail.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-244": {
+        "name": "Improper Clearing of Heap Memory Before Release ('Heap Inspection')",
+        "description": "Using realloc() to resize buffers that store sensitive information can leave the sensitive information exposed to attack, because it is not removed from memory.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-245": {
+        "name": "J2EE Bad Practices: Direct Management of Connections",
+        "description": "The J2EE application directly manages connections, instead of using the container's connection management facilities.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-246": {
+        "name": "J2EE Bad Practices: Direct Use of Sockets",
+        "description": "The J2EE application directly uses sockets instead of using framework method calls.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-248": {
+        "name": "Uncaught Exception",
+        "description": "An exception is thrown from a function, but it is not caught.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-250": {
+        "name": "Execution with Unnecessary Privileges",
+        "description": "The product performs an operation at a privilege level that is higher than the minimum level required, which creates new weaknesses or amplifies the consequences of other weaknesses.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-252": {
+        "name": "Unchecked Return Value",
+        "description": "The product does not check the return value from a method or function, which can prevent it from detecting unexpected states and conditions.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-256": {
+        "name": "Plaintext Storage of a Password",
+        "description": "Storing a password in plaintext may result in a system compromise.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-258": {
+        "name": "Empty Password in Configuration File",
+        "description": "Using an empty string as a password is insecure.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-259": {
+        "name": "Use of Hard-coded Password",
+        "description": "The product contains a hard-coded password, which it uses for its own inbound authentication or for outbound communication to external components.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-260": {
+        "name": "Password in Configuration File",
+        "description": "The product stores a password in a configuration file that might be accessible to actors who do not know the password.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-261": {
+        "name": "Weak Encoding for Password",
+        "description": "Obscuring a password with a trivial encoding does not protect the password.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-272": {
+        "name": "Least Privilege Violation",
+        "description": "The elevated privilege level required to perform operations such as chroot() should be dropped immediately after the operation is performed.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Pillar CWE-284": {
+        "name": "Improper Access Control",
+        "description": "The product does not restrict or incorrectly restricts access to a resource from an unauthorized actor.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Class CWE-285": {
+        "name": "Improper Authorization",
+        "description": "The product does not perform or incorrectly performs an authorization check when an actor attempts to access a resource or perform an action.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Class CWE-330": {
+        "name": "Use of Insufficiently Random Values",
+        "description": "The product uses insufficiently random numbers or values in a security context that depends on unpredictable numbers.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-359": {
+        "name": "Exposure of Private Personal Information to an Unauthorized Actor",
+        "description": "The product does not properly prevent a person's private, personal information from being accessed by actors who either (1) are not explicitly authorized to access the information or (2) do not have the implicit consent of the person about whom the information is collected.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-364": {
+        "name": "Signal Handler Race Condition",
+        "description": "The product uses a signal handler that introduces a race condition.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-367": {
+        "name": "Time-of-check Time-of-use (TOCTOU) Race Condition",
+        "description": "The product checks the state of a resource before using that resource, but the resource's state can change between the check and the use in a way that invalidates the results of the check. This can cause the product to perform invalid actions when the resource is in an unexpected state.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Class CWE-377": {
+        "name": "Insecure Temporary File",
+        "description": "Creating and using insecure temporary files can leave application and system data vulnerable to attack.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-382": {
+        "name": "J2EE Bad Practices: Use of System.exit()",
+        "description": "A J2EE application uses System.exit(), which also shuts down its container.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-383": {
+        "name": "J2EE Bad Practices: Direct Use of Threads",
+        "description": "Thread management in a Web application is forbidden in some circumstances and is always highly error prone.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Compound CWE-384": {
+        "name": "Session Fixation",
+        "description": "Authenticating a user, or otherwise establishing a new user session, without invalidating any existing session identifier gives an attacker the opportunity to steal authenticated sessions.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-391": {
+        "name": "Unchecked Error Condition",
+        "description": "[PLANNED FOR DEPRECATION. SEE MAINTENANCE NOTES AND CONSIDER CWE-252, CWE-248, OR CWE-1069.] Ignoring exceptions and other error conditions may allow an attacker to induce unexpected behavior unnoticed.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-395": {
+        "name": "Use of NullPointerException Catch to Detect NULL Pointer Dereference",
+        "description": "Catching NullPointerException should not be used as an alternative to programmatic checks to prevent dereferencing a null pointer.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-396": {
+        "name": "Declaration of Catch for Generic Exception",
+        "description": "Catching overly broad exceptions promotes complex error handling code that is more likely to contain security vulnerabilities.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-397": {
+        "name": "Declaration of Throws for Generic Exception",
+        "description": "Throwing overly broad exceptions promotes complex error handling code that is more likely to contain security vulnerabilities.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-401": {
+        "name": "Missing Release of Memory after Effective Lifetime",
+        "description": "The product does not sufficiently track and release allocated memory after it has been used, which slowly consumes remaining memory.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Class CWE-404": {
+        "name": "Improper Resource Shutdown or Release",
+        "description": "The product does not release or incorrectly releases a resource before it is made available for re-use.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-412": {
+        "name": "Unrestricted Externally Accessible Lock",
+        "description": "The product properly checks for the existence of a lock, but the lock can be externally controlled or influenced by an actor that is outside of the intended sphere of control.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-415": {
+        "name": "Double Free",
+        "description": "The product calls free() twice on the same memory address, potentially leading to modification of unexpected memory locations.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-416": {
+        "name": "Use After Free",
+        "description": "Referencing memory after it has been freed can cause a program to crash, use unexpected values, or execute code.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-457": {
+        "name": "Use of Uninitialized Variable",
+        "description": "The code uses a variable that has not been initialized, leading to unpredictable or unintended results.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-474": {
+        "name": "Use of Function with Inconsistent Implementations",
+        "description": "The code uses a function that has inconsistent implementations across operating systems and versions.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-475": {
+        "name": "Undefined Behavior for Input to API",
+        "description": "The behavior of this function is undefined unless its control parameter is set to a specific value.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-476": {
+        "name": "NULL Pointer Dereference",
+        "description": "A NULL pointer dereference occurs when the application dereferences a pointer that it expects to be valid, but is NULL, typically causing a crash or exit.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-477": {
+        "name": "Use of Obsolete Function",
+        "description": "The code uses deprecated or obsolete functions, which suggests that the code has not been actively reviewed or maintained.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-486": {
+        "name": "Comparison of Classes by Name",
+        "description": "The product compares classes by name, which can cause it to use the wrong class when multiple classes can have the same name.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-488": {
+        "name": "Exposure of Data Element to Wrong Session",
+        "description": "The product does not sufficiently enforce boundaries between the states of different sessions, causing data to be provided to, or used by, the wrong session.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-489": {
+        "name": "Active Debug Code",
+        "description": "The product is deployed to unauthorized actors with debugging code still enabled or active, which can create unintended entry points or expose sensitive information.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-491": {
+        "name": "Public cloneable() Method Without Final ('Object Hijack')",
+        "description": "A class has a cloneable() method that is not declared final, which allows an object to be created without calling the constructor. This can cause the object to be in an unexpected state.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-492": {
+        "name": "Use of Inner Class Containing Sensitive Data",
+        "description": "Inner classes are translated into classes that are accessible at package scope and may expose code that the programmer intended to keep private to attackers.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-493": {
+        "name": "Critical Public Variable Without Final Modifier",
+        "description": "The product has a critical public variable that is not final, which allows the variable to be modified to contain unexpected values.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-495": {
+        "name": "Private Data Structure Returned From A Public Method",
+        "description": "The product has a method that is declared public, but returns a reference to a private data structure, which could then be modified in unexpected ways.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-496": {
+        "name": "Public Data Assigned to Private Array-Typed Field",
+        "description": "Assigning public data to a private array is equivalent to giving public access to the array.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-497": {
+        "name": "Exposure of Sensitive System Information to an Unauthorized Control Sphere",
+        "description": "The product does not properly prevent sensitive system-level information from being accessed by unauthorized actors who do not have the same level of access to the underlying system as the product does.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-501": {
+        "name": "Trust Boundary Violation",
+        "description": "The product mixes trusted and untrusted data in the same data structure or structured message.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Variant CWE-558": {
+        "name": "Use of getlogin() in Multithreaded Application",
+        "description": "The product uses the getlogin() function in a multithreaded context, potentially causing it to return incorrect values.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      },
+      "Base CWE-798": {
+        "name": "Use of Hard-coded Credentials",
+        "description": "The product contains hard-coded credentials, such as a password or cryptographic key, which it uses for its own inbound authentication, outbound communication to external components, or encryption of internal data.",
+        "eval_strategy": "evaluator.WeightedAverageEvaluator",
+        "children": {}
+      }
+    }
+  },
+  "measures": {
+    "CWE-5": {
+      "name": "J2EE Misconfiguration: Data Transmission Without Encryption",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Information sent over a network can be compromised while in transit. An attacker may be able to read or modify the contents if the data are sent in plaintext or are weakly encrypted.",
+      "children": {
+        "CWE-5 Diagnostic": {}
+      }
+    },
+    "CWE-6": {
+      "name": "J2EE Misconfiguration: Insufficient Session-ID Length",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The J2EE application is configured to use an insufficient session ID length.",
+      "children": {
+        "CWE-6 Diagnostic": {}
+      }
+    },
+    "CWE-7": {
+      "name": "J2EE Misconfiguration: Missing Custom Error Page",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The default error page of a web application should not display sensitive information about the product.",
+      "children": {
+        "CWE-7 Diagnostic": {}
+      }
+    },
+    "CWE-8": {
+      "name": "J2EE Misconfiguration: Entity Bean Declared Remote",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "When an application exposes a remote interface for an entity bean, it might also expose methods that get or set the bean's data. These methods could be leveraged to read sensitive information, or to change data in ways that violate the application's expectations, potentially leading to other vulnerabilities.",
+      "children": {
+        "CWE-8 Diagnostic": {}
+      }
+    },
+    "CWE-9": {
+      "name": "J2EE Misconfiguration: Weak Access Permissions for EJB Methods",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "If elevated access rights are assigned to EJB methods, then an attacker can take advantage of the permissions to exploit the product.",
+      "children": {
+        "CWE-9 Diagnostic": {}
+      }
+    },
+    "CWE-11": {
+      "name": "ASP.NET Misconfiguration: Creating Debug Binary",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Debugging messages help attackers learn about the system and plan a form of attack.",
+      "children": {
+        "CWE-11 Diagnostic": {}
+      }
+    },
+    "CWE-12": {
+      "name": "ASP.NET Misconfiguration: Missing Custom Error Page",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "An ASP .NET application must enable custom error pages in order to prevent attackers from mining information from the framework's built-in responses.",
+      "children": {
+        "CWE-12 Diagnostic": {}
+      }
+    },
+    "CWE-13": {
+      "name": "ASP.NET Misconfiguration: Password in Configuration File",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Storing a plaintext password in a configuration file allows anyone who can read the file access to the password-protected resource making them an easy target for attackers.",
+      "children": {
+        "CWE-13 Diagnostic": {}
+      }
+    },
+    "CWE-14": {
+      "name": "Compiler Removal of Code to Clear Buffers",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Sensitive memory is cleared according to the source code, but compiler optimizations leave the memory untouched when it is not read from again, aka dead store removal.",
+      "children": {
+        "CWE-14 Diagnostic": {}
+      }
+    },
+    "CWE-15": {
+      "name": "External Control of System or Configuration Setting",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "One or more system settings or configuration elements can be externally controlled by a user.",
+      "children": {
+        "CWE-15 Diagnostic": {}
+      }
+    },
+    "CWE-20": {
+      "name": "Improper Input Validation",
+      "positive": "false",
+      "weakness_abstraction": "Class",
+      "description": "The product receives input or data, but it does not validate or incorrectly validates that the input has the properties that are required to process the data safely and correctly.",
+      "children": {
+        "CWE-15": {},
+        "CWE-73": {},
+        "CWE-102": {},
+        "CWE-103": {},
+        "CWE-104": {},
+        "CWE-105": {},
+        "CWE-106": {},
+        "CWE-107": {},
+        "CWE-108": {},
+        "CWE-109": {},
+        "CWE-110": {},
+        "CWE-111": {},
+        "CWE-112": {},
+        "CWE-113": {},
+        "CWE-114": {},
+        "CWE-117": {},
+        "CWE-119": {},
+        "CWE-120": {},
+        "CWE-134": {},
+        "CWE-170": {},
+        "CWE-190": {},
+        "CWE-466": {},
+        "CWE-470": {},
+        "CWE-785": {},
+        "CWE-20 Diagnostic": {}
+      }
+    },
+    "CWE-73": {
+      "name": "External Control of File Name or Path",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product allows user input to control or influence paths or file names that are used in filesystem operations.",
+      "children": {
+        "CWE-73 Diagnostic": {}
+      }
+    },
+    "CWE-77": {
+      "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')",
+      "positive": "false",
+      "weakness_abstraction": "Class",
+      "description": "The product constructs all or part of a command using externally-influenced input from an upstream component, but it does not neutralize or incorrectly neutralizes special elements that could modify the intended command when it is sent to a downstream component.",
+      "children": {
+        "CWE-77 Diagnostic": {}
+      }
+    },
+    "CWE-79": {
+      "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users.",
+      "children": {
+        "CWE-79 Diagnostic": {}
+      }
+    },
+    "CWE-89": {
+      "name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product constructs all or part of an SQL command using externally-influenced input from an upstream component, but it does not neutralize or incorrectly neutralizes special elements that could modify the intended SQL command when it is sent to a downstream component.",
+      "children": {
+        "CWE-89 Diagnostic": {}
+      }
+    },
+    "CWE-99": {
+      "name": "Improper Control of Resource Identifiers ('Resource Injection')",
+      "positive": "false",
+      "weakness_abstraction": "Class",
+      "description": "The product receives input from an upstream component, but it does not restrict or incorrectly restricts the input before it is used as an identifier for a resource that may be outside the intended sphere of control.",
+      "children": {
+        "CWE-99 Diagnostic": {}
+      }
+    },
+    "CWE-102": {
+      "name": "Struts: Duplicate Validation Forms",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product uses multiple validation forms with the same name, which might cause the Struts Validator to validate a form that the programmer does not expect.",
+      "children": {
+        "CWE-102 Diagnostic": {}
+      }
+    },
+    "CWE-103": {
+      "name": "Struts: Incomplete validate() Method Definition",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product has a validator form that either does not define a validate() method, or defines a validate() method but does not call super.validate().",
+      "children": {
+        "CWE-103 Diagnostic": {}
+      }
+    },
+    "CWE-104": {
+      "name": "Struts: Form Bean Does Not Extend Validation Class",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "If a form bean does not extend an ActionForm subclass of the Validator framework, it can expose the application to other weaknesses related to insufficient input validation.",
+      "children": {
+        "CWE-104 Diagnostic": {}
+      }
+    },
+    "CWE-105": {
+      "name": "Struts: Form Field Without Validator",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product has a form field that is not validated by a corresponding validation form, which can introduce other weaknesses related to insufficient input validation.",
+      "children": {
+        "CWE-105 Diagnostic": {}
+      }
+    },
+    "CWE-106": {
+      "name": "Struts: Plug-in Framework not in Use",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "When an application does not use an input validation framework such as the Struts Validator, there is a greater risk of introducing weaknesses related to insufficient input validation.",
+      "children": {
+        "CWE-106 Diagnostic": {}
+      }
+    },
+    "CWE-107": {
+      "name": "Struts: Unused Validation Form",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "An unused validation form indicates that validation logic is not up-to-date.",
+      "children": {
+        "CWE-107 Diagnostic": {}
+      }
+    },
+    "CWE-108": {
+      "name": "Struts: Unvalidated Action Form",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Every Action Form must have a corresponding validation form.",
+      "children": {
+        "CWE-108 Diagnostic": {}
+      }
+    },
+    "CWE-109": {
+      "name": "Struts: Validator Turned Off",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Automatic filtering via a Struts bean has been turned off, which disables the Struts Validator and custom validation logic. This exposes the application to other weaknesses related to insufficient input validation.",
+      "children": {
+        "CWE-109 Diagnostic": {}
+      }
+    },
+    "CWE-110": {
+      "name": "Struts: Validator Without Form Field",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Validation fields that do not appear in forms they are associated with indicate that the validation logic is out of date.",
+      "children": {
+        "CWE-110 Diagnostic": {}
+      }
+    },
+    "CWE-111": {
+      "name": "Direct Use of Unsafe JNI",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "When a Java application uses the Java Native Interface (JNI) to call code written in another programming language, it can expose the application to weaknesses in that code, even if those weaknesses cannot occur in Java.",
+      "children": {
+        "CWE-111 Diagnostic": {}
+      }
+    },
+    "CWE-112": {
+      "name": "Missing XML Validation",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product accepts XML from an untrusted source but does not validate the XML against the proper schema.",
+      "children": {
+        "CWE-112 Diagnostic": {}
+      }
+    },
+    "CWE-113": {
+      "name": "Improper Neutralization of CRLF Sequences in HTTP Headers ('HTTP Request/Response Splitting')",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product receives data from an HTTP agent/component (e.g., web server, proxy, browser, etc.), but it does not neutralize or incorrectly neutralizes CR and LF characters before the data is included in outgoing HTTP headers.",
+      "children": {
+        "CWE-113 Diagnostic": {}
+      }
+    },
+    "CWE-114": {
+      "name": "Process Control",
+      "positive": "false",
+      "weakness_abstraction": "Class",
+      "description": "Executing commands or loading libraries from an untrusted source or in an untrusted environment can cause an application to execute malicious commands (and payloads) on behalf of an attacker.",
+      "children": {
+        "CWE-114 Diagnostic": {}
+      }
+    },
+    "CWE-117": {
+      "name": "Improper Output Neutralization for Logs",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product does not neutralize or incorrectly neutralizes output that is written to logs.",
+      "children": {
+        "CWE-117 Diagnostic": {}
+      }
+    },
+    "CWE-119": {
+      "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer",
+      "positive": "false",
+      "weakness_abstraction": "Class",
+      "description": "The product performs operations on a memory buffer, but it can read from or write to a memory location that is outside of the intended boundary of the buffer.",
+      "children": {
+        "CWE-119 Diagnostic": {}
+      }
+    },
+    "CWE-120": {
+      "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product copies an input buffer to an output buffer without verifying that the size of the input buffer is less than the size of the output buffer, leading to a buffer overflow.",
+      "children": {
+        "CWE-120 Diagnostic": {}
+      }
+    },
+    "CWE-134": {
+      "name": "Use of Externally-Controlled Format String",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product uses a function that accepts a format string as an argument, but the format string originates from an external source.",
+      "children": {
+        "CWE-134 Diagnostic": {}
+      }
+    },
+    "CWE-170": {
+      "name": "Improper Null Termination",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product does not terminate or incorrectly terminates a string or array with a null character or equivalent terminator.",
+      "children": {
+        "CWE-170 Diagnostic": {}
+      }
+    },
+    "CWE-190": {
+      "name": "Integer Overflow or Wraparound",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product performs a calculation that can produce an integer overflow or wraparound, when the logic assumes that the resulting value will always be larger than the original value. This can introduce other weaknesses when the calculation is used for resource management or execution control.",
+      "children": {
+        "CWE-190 Diagnostic": {}
+      }
+    },
+    "CWE-242": {
+      "name": "Use of Inherently Dangerous Function",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product calls a function that can never be guaranteed to work safely.",
+      "children": {
+        "CWE-242 Diagnostic": {}
+      }
+    },
+    "CWE-243": {
+      "name": "Creation of chroot Jail Without Changing Working Directory",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product uses the chroot() system call to create a jail, but does not change the working directory afterward. This does not prevent access to files outside of the jail.",
+      "children": {
+        "CWE-243 Diagnostic": {}
+      }
+    },
+    "CWE-244": {
+      "name": "Improper Clearing of Heap Memory Before Release ('Heap Inspection')",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Using realloc() to resize buffers that store sensitive information can leave the sensitive information exposed to attack, because it is not removed from memory.",
+      "children": {
+        "CWE-244 Diagnostic": {}
+      }
+    },
+    "CWE-245": {
+      "name": "J2EE Bad Practices: Direct Management of Connections",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The J2EE application directly manages connections, instead of using the container's connection management facilities.",
+      "children": {
+        "CWE-245 Diagnostic": {}
+      }
+    },
+    "CWE-246": {
+      "name": "J2EE Bad Practices: Direct Use of Sockets",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The J2EE application directly uses sockets instead of using framework method calls.",
+      "children": {
+        "CWE-246 Diagnostic": {}
+      }
+    },
+    "CWE-248": {
+      "name": "Uncaught Exception",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "An exception is thrown from a function, but it is not caught.",
+      "children": {
+        "CWE-248 Diagnostic": {}
+      }
+    },
+    "CWE-250": {
+      "name": "Execution with Unnecessary Privileges",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product performs an operation at a privilege level that is higher than the minimum level required, which creates new weaknesses or amplifies the consequences of other weaknesses.",
+      "children": {
+        "CWE-250 Diagnostic": {}
+      }
+    },
+    "CWE-252": {
+      "name": "Unchecked Return Value",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product does not check the return value from a method or function, which can prevent it from detecting unexpected states and conditions.",
+      "children": {
+        "CWE-252 Diagnostic": {}
+      }
+    },
+    "CWE-256": {
+      "name": "Plaintext Storage of a Password",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "Storing a password in plaintext may result in a system compromise.",
+      "children": {
+        "CWE-256 Diagnostic": {}
+      }
+    },
+    "CWE-258": {
+      "name": "Empty Password in Configuration File",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Using an empty string as a password is insecure.",
+      "children": {
+        "CWE-258 Diagnostic": {}
+      }
+    },
+    "CWE-259": {
+      "name": "Use of Hard-coded Password",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product contains a hard-coded password, which it uses for its own inbound authentication or for outbound communication to external components.",
+      "children": {
+        "CWE-259 Diagnostic": {}
+      }
+    },
+    "CWE-260": {
+      "name": "Password in Configuration File",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product stores a password in a configuration file that might be accessible to actors who do not know the password.",
+      "children": {
+        "CWE-260 Diagnostic": {}
+      }
+    },
+    "CWE-261": {
+      "name": "Weak Encoding for Password",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "Obscuring a password with a trivial encoding does not protect the password.",
+      "children": {
+        "CWE-261 Diagnostic": {}
+      }
+    },
+    "CWE-272": {
+      "name": "Least Privilege Violation",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The elevated privilege level required to perform operations such as chroot() should be dropped immediately after the operation is performed.",
+      "children": {
+        "CWE-272 Diagnostic": {}
+      }
+    },
+    "CWE-284": {
+      "name": "Improper Access Control",
+      "positive": "false",
+      "weakness_abstraction": "Pillar",
+      "description": "The product does not restrict or incorrectly restricts access to a resource from an unauthorized actor.",
+      "children": {
+        "CWE-284 Diagnostic": {}
+      }
+    },
+    "CWE-285": {
+      "name": "Improper Authorization",
+      "positive": "false",
+      "weakness_abstraction": "Class",
+      "description": "The product does not perform or incorrectly performs an authorization check when an actor attempts to access a resource or perform an action.",
+      "children": {
+        "CWE-285 Diagnostic": {}
+      }
+    },
+    "CWE-330": {
+      "name": "Use of Insufficiently Random Values",
+      "positive": "false",
+      "weakness_abstraction": "Class",
+      "description": "The product uses insufficiently random numbers or values in a security context that depends on unpredictable numbers.",
+      "children": {
+        "CWE-330 Diagnostic": {}
+      }
+    },
+    "CWE-359": {
+      "name": "Exposure of Private Personal Information to an Unauthorized Actor",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product does not properly prevent a person's private, personal information from being accessed by actors who either (1) are not explicitly authorized to access the information or (2) do not have the implicit consent of the person about whom the information is collected.",
+      "children": {
+        "CWE-359 Diagnostic": {}
+      }
+    },
+    "CWE-364": {
+      "name": "Signal Handler Race Condition",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product uses a signal handler that introduces a race condition.",
+      "children": {
+        "CWE-364 Diagnostic": {}
+      }
+    },
+    "CWE-367": {
+      "name": "Time-of-check Time-of-use (TOCTOU) Race Condition",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product checks the state of a resource before using that resource, but the resource's state can change between the check and the use in a way that invalidates the results of the check. This can cause the product to perform invalid actions when the resource is in an unexpected state.",
+      "children": {
+        "CWE-367 Diagnostic": {}
+      }
+    },
+    "CWE-377": {
+      "name": "Insecure Temporary File",
+      "positive": "false",
+      "weakness_abstraction": "Class",
+      "description": "Creating and using insecure temporary files can leave application and system data vulnerable to attack.",
+      "children": {
+        "CWE-377 Diagnostic": {}
+      }
+    },
+    "CWE-382": {
+      "name": "J2EE Bad Practices: Use of System.exit()",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "A J2EE application uses System.exit(), which also shuts down its container.",
+      "children": {
+        "CWE-382 Diagnostic": {}
+      }
+    },
+    "CWE-383": {
+      "name": "J2EE Bad Practices: Direct Use of Threads",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Thread management in a Web application is forbidden in some circumstances and is always highly error prone.",
+      "children": {
+        "CWE-383 Diagnostic": {}
+      }
+    },
+    "CWE-384": {
+      "name": "Session Fixation",
+      "positive": "false",
+      "weakness_abstraction": "Compound",
+      "description": "Authenticating a user, or otherwise establishing a new user session, without invalidating any existing session identifier gives an attacker the opportunity to steal authenticated sessions.",
+      "children": {
+        "CWE-384 Diagnostic": {}
+      }
+    },
+    "CWE-391": {
+      "name": "Unchecked Error Condition",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "[PLANNED FOR DEPRECATION. SEE MAINTENANCE NOTES AND CONSIDER CWE-252, CWE-248, OR CWE-1069.] Ignoring exceptions and other error conditions may allow an attacker to induce unexpected behavior unnoticed.",
+      "children": {
+        "CWE-391 Diagnostic": {}
+      }
+    },
+    "CWE-395": {
+      "name": "Use of NullPointerException Catch to Detect NULL Pointer Dereference",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "Catching NullPointerException should not be used as an alternative to programmatic checks to prevent dereferencing a null pointer.",
+      "children": {
+        "CWE-395 Diagnostic": {}
+      }
+    },
+    "CWE-396": {
+      "name": "Declaration of Catch for Generic Exception",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "Catching overly broad exceptions promotes complex error handling code that is more likely to contain security vulnerabilities.",
+      "children": {
+        "CWE-396 Diagnostic": {}
+      }
+    },
+    "CWE-397": {
+      "name": "Declaration of Throws for Generic Exception",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "Throwing overly broad exceptions promotes complex error handling code that is more likely to contain security vulnerabilities.",
+      "children": {
+        "CWE-397 Diagnostic": {}
+      }
+    },
+    "CWE-401": {
+      "name": "Missing Release of Memory after Effective Lifetime",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product does not sufficiently track and release allocated memory after it has been used, which slowly consumes remaining memory.",
+      "children": {
+        "CWE-401 Diagnostic": {}
+      }
+    },
+    "CWE-404": {
+      "name": "Improper Resource Shutdown or Release",
+      "positive": "false",
+      "weakness_abstraction": "Class",
+      "description": "The product does not release or incorrectly releases a resource before it is made available for re-use.",
+      "children": {
+        "CWE-404 Diagnostic": {}
+      }
+    },
+    "CWE-412": {
+      "name": "Unrestricted Externally Accessible Lock",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product properly checks for the existence of a lock, but the lock can be externally controlled or influenced by an actor that is outside of the intended sphere of control.",
+      "children": {
+        "CWE-412 Diagnostic": {}
+      }
+    },
+    "CWE-415": {
+      "name": "Double Free",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product calls free() twice on the same memory address, potentially leading to modification of unexpected memory locations.",
+      "children": {
+        "CWE-415 Diagnostic": {}
+      }
+    },
+    "CWE-416": {
+      "name": "Use After Free",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Referencing memory after it has been freed can cause a program to crash, use unexpected values, or execute code.",
+      "children": {
+        "CWE-416 Diagnostic": {}
+      }
+    },
+    "CWE-457": {
+      "name": "Use of Uninitialized Variable",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The code uses a variable that has not been initialized, leading to unpredictable or unintended results.",
+      "children": {
+        "CWE-457 Diagnostic": {}
+      }
+    },
+    "CWE-466": {
+      "name": "Return of Pointer Value Outside of Expected Range",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "A function can return a pointer to memory that is outside of the buffer that the pointer is expected to reference.",
+      "children": {
+        "CWE-466 Diagnostic": {}
+      }
+    },
+    "CWE-470": {
+      "name": "Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection')",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product uses external input with reflection to select which classes or code to use, but it does not sufficiently prevent the input from selecting improper classes or code.",
+      "children": {
+        "CWE-470 Diagnostic": {}
+      }
+    },
+    "CWE-474": {
+      "name": "Use of Function with Inconsistent Implementations",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The code uses a function that has inconsistent implementations across operating systems and versions.",
+      "children": {
+        "CWE-474 Diagnostic": {}
+      }
+    },
+    "CWE-475": {
+      "name": "Undefined Behavior for Input to API",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The behavior of this function is undefined unless its control parameter is set to a specific value.",
+      "children": {
+        "CWE-475 Diagnostic": {}
+      }
+    },
+    "CWE-476": {
+      "name": "NULL Pointer Dereference",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "A NULL pointer dereference occurs when the application dereferences a pointer that it expects to be valid, but is NULL, typically causing a crash or exit.",
+      "children": {
+        "CWE-476 Diagnostic": {}
+      }
+    },
+    "CWE-477": {
+      "name": "Use of Obsolete Function",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The code uses deprecated or obsolete functions, which suggests that the code has not been actively reviewed or maintained.",
+      "children": {
+        "CWE-477 Diagnostic": {}
+      }
+    },
+    "CWE-486": {
+      "name": "Comparison of Classes by Name",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product compares classes by name, which can cause it to use the wrong class when multiple classes can have the same name.",
+      "children": {
+        "CWE-486 Diagnostic": {}
+      }
+    },
+    "CWE-488": {
+      "name": "Exposure of Data Element to Wrong Session",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product does not sufficiently enforce boundaries between the states of different sessions, causing data to be provided to, or used by, the wrong session.",
+      "children": {
+        "CWE-488 Diagnostic": {}
+      }
+    },
+    "CWE-489": {
+      "name": "Active Debug Code",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product is deployed to unauthorized actors with debugging code still enabled or active, which can create unintended entry points or expose sensitive information.",
+      "children": {
+        "CWE-489 Diagnostic": {}
+      }
+    },
+    "CWE-491": {
+      "name": "Public cloneable() Method Without Final ('Object Hijack')",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "A class has a cloneable() method that is not declared final, which allows an object to be created without calling the constructor. This can cause the object to be in an unexpected state.",
+      "children": {
+        "CWE-491 Diagnostic": {}
+      }
+    },
+    "CWE-492": {
+      "name": "Use of Inner Class Containing Sensitive Data",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Inner classes are translated into classes that are accessible at package scope and may expose code that the programmer intended to keep private to attackers.",
+      "children": {
+        "CWE-492 Diagnostic": {}
+      }
+    },
+    "CWE-493": {
+      "name": "Critical Public Variable Without Final Modifier",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product has a critical public variable that is not final, which allows the variable to be modified to contain unexpected values.",
+      "children": {
+        "CWE-493 Diagnostic": {}
+      }
+    },
+    "CWE-495": {
+      "name": "Private Data Structure Returned From A Public Method",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product has a method that is declared public, but returns a reference to a private data structure, which could then be modified in unexpected ways.",
+      "children": {
+        "CWE-495 Diagnostic": {}
+      }
+    },
+    "CWE-496": {
+      "name": "Public Data Assigned to Private Array-Typed Field",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Assigning public data to a private array is equivalent to giving public access to the array.",
+      "children": {
+        "CWE-496 Diagnostic": {}
+      }
+    },
+    "CWE-497": {
+      "name": "Exposure of Sensitive System Information to an Unauthorized Control Sphere",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product does not properly prevent sensitive system-level information from being accessed by unauthorized actors who do not have the same level of access to the underlying system as the product does.",
+      "children": {
+        "CWE-497 Diagnostic": {}
+      }
+    },
+    "CWE-501": {
+      "name": "Trust Boundary Violation",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product mixes trusted and untrusted data in the same data structure or structured message.",
+      "children": {
+        "CWE-501 Diagnostic": {}
+      }
+    },
+    "CWE-558": {
+      "name": "Use of getlogin() in Multithreaded Application",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product uses the getlogin() function in a multithreaded context, potentially causing it to return incorrect values.",
+      "children": {
+        "CWE-558 Diagnostic": {}
+      }
+    },
+    "CWE-785": {
+      "name": "Use of Path Manipulation Function without Maximum-sized Buffer",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The product invokes a function for normalizing paths or file names, but it provides an output buffer that is smaller than the maximum possible size, such as PATH_MAX.",
+      "children": {
+        "CWE-785 Diagnostic": {}
+      }
+    },
+    "CWE-798": {
+      "name": "Use of Hard-coded Credentials",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product contains hard-coded credentials, such as a password or cryptographic key, which it uses for its own inbound authentication, outbound communication to external components, or encryption of internal data.",
+      "children": {
+        "CWE-798 Diagnostic": {}
+      }
+    }
+  },
+  "diagnostics": {
+    "CWE-5 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-5"
+    },
+    "CWE-6 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-6"
+    },
+    "CWE-7 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-7"
+    },
+    "CWE-8 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-8"
+    },
+    "CWE-9 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-9"
+    },
+    "CWE-11 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-11"
+    },
+    "CWE-12 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-12"
+    },
+    "CWE-13 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-13"
+    },
+    "CWE-14 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-14"
+    },
+    "CWE-15 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-15"
+    },
+    "CWE-20 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-20"
+    },
+    "CWE-73 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-73"
+    },
+    "CWE-77 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-77"
+    },
+    "CWE-79 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-79"
+    },
+    "CWE-89 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-89"
+    },
+    "CWE-99 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-99"
+    },
+    "CWE-102 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-102"
+    },
+    "CWE-103 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-103"
+    },
+    "CWE-104 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-104"
+    },
+    "CWE-105 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-105"
+    },
+    "CWE-106 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-106"
+    },
+    "CWE-107 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-107"
+    },
+    "CWE-108 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-108"
+    },
+    "CWE-109 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-109"
+    },
+    "CWE-110 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-110"
+    },
+    "CWE-111 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-111"
+    },
+    "CWE-112 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-112"
+    },
+    "CWE-113 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-113"
+    },
+    "CWE-114 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-114"
+    },
+    "CWE-117 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-117"
+    },
+    "CWE-119 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-119"
+    },
+    "CWE-120 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-120"
+    },
+    "CWE-134 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-134"
+    },
+    "CWE-170 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-170"
+    },
+    "CWE-190 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-190"
+    },
+    "CWE-242 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-242"
+    },
+    "CWE-243 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-243"
+    },
+    "CWE-244 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-244"
+    },
+    "CWE-245 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-245"
+    },
+    "CWE-246 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-246"
+    },
+    "CWE-248 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-248"
+    },
+    "CWE-250 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-250"
+    },
+    "CWE-252 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-252"
+    },
+    "CWE-256 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-256"
+    },
+    "CWE-258 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-258"
+    },
+    "CWE-259 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-259"
+    },
+    "CWE-260 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-260"
+    },
+    "CWE-261 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-261"
+    },
+    "CWE-272 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-272"
+    },
+    "CWE-284 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-284"
+    },
+    "CWE-285 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-285"
+    },
+    "CWE-330 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-330"
+    },
+    "CWE-359 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-359"
+    },
+    "CWE-364 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-364"
+    },
+    "CWE-367 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-367"
+    },
+    "CWE-377 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-377"
+    },
+    "CWE-382 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-382"
+    },
+    "CWE-383 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-383"
+    },
+    "CWE-384 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-384"
+    },
+    "CWE-391 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-391"
+    },
+    "CWE-395 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-395"
+    },
+    "CWE-396 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-396"
+    },
+    "CWE-397 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-397"
+    },
+    "CWE-401 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-401"
+    },
+    "CWE-404 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-404"
+    },
+    "CWE-412 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-412"
+    },
+    "CWE-415 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-415"
+    },
+    "CWE-416 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-416"
+    },
+    "CWE-457 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-457"
+    },
+    "CWE-466 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-466"
+    },
+    "CWE-470 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-470"
+    },
+    "CWE-474 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-474"
+    },
+    "CWE-475 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-475"
+    },
+    "CWE-476 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-476"
+    },
+    "CWE-477 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-477"
+    },
+    "CWE-486 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-486"
+    },
+    "CWE-488 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-488"
+    },
+    "CWE-489 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-489"
+    },
+    "CWE-491 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-491"
+    },
+    "CWE-492 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-492"
+    },
+    "CWE-493 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-493"
+    },
+    "CWE-495 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-495"
+    },
+    "CWE-496 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-496"
+    },
+    "CWE-497 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-497"
+    },
+    "CWE-501 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-501"
+    },
+    "CWE-558 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-558"
+    },
+    "CWE-785 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-785"
+    },
+    "CWE-798 Diagnostic": {
+      "toolname": "TODO",
+      "description": "Sum of findings of type CWE-798"
+    }
+  }
+}

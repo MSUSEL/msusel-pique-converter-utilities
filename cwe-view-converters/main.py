@@ -184,7 +184,7 @@ def build_diagnostics_from_measures(measures, number_of_tools):
         for cwe_id in measures.keys():
             diagnostic_name = cwe_id + " Diagnostic " + tool_name_id
             diagnostics.update(
-                {diagnostic_name: {"toolname": tool_name_id, "description": "Sum of findings of type " + cwe_id}})
+                {diagnostic_name: {"toolName": tool_name_id, "description": "Sum of findings of type " + cwe_id}})
             # after building the diagnostic node I still need to add the node as the child of the measure
             measures[cwe_id].children.update({diagnostic_name: {}})
     return diagnostics

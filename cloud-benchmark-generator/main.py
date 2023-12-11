@@ -7,14 +7,38 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 projects = [
     "alpine",
-    "nginx"
+    "nginx",
+    "busybox",
+    "ubuntu",
+    "python",
+    "redis",
+    "postgres",
+    "memcached",
+    "node",
+    "httpd",
+    "mongo",
+    "mysql",
+    "traefik",
+    "rabbitmq",
+    "docker",
+    "mariadb",
+    "hello-world",
+    "openjdk",
+    "golang",
+    "registry",
+    "wordpress",
+    "debian",
+    "centos",
+    "php",
+    "consul"
+
 ]
 
 
 def export_to_json(master_map):
     if not os.path.exists("out/"):
         os.makedirs("out/")
-    with open('out/docker-projects-benchmark.json', "w") as outfile:
+    with open('out/docker-projects-'+str(len(projects))+'-benchmark.json', "w") as outfile:
         json.dump(master_map, outfile, indent=2)
 
 

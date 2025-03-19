@@ -176,6 +176,23 @@ def build_measures_from_cwe_tree(tree):
             {node.cwe_id: MeasureNode(node.name, node.weakness_abstraction, node.description, children_dict)})
     return measures
 
+def recursively_reassign_parent_to_squash(pf, measures, dict_child_ids):
+    if not dict_child_ids:
+        return
+    for cwe_id in list(dict_child_ids):
+        # we know we want to add these to pf's children, first iteration will be redundant.
+        pf.children.update({cwe_id: {}})
+        new_children = measures[cwe_id].children
+        recursively_reassign_parent_to_squash(pf, measures, new_children)
+
+def squash_measures(product_factors, measures):
+    for pf in product_factors.values():
+        recursively_reassign_parent_to_squash(pf, measures, pf.children)
+        print(len(pf.children))
+    # remove children measures
+    for measure in measures.values():
+        measure.children = {}
+    return measures
 
 def build_diagnostics_from_measures(measures, number_of_tools):
     diagnostics = {}
@@ -221,6 +238,12 @@ def main():
                                                          'are \'ISO\' for ISO 25010 and \'STRIDE\' for Microsoft '
                                                          'STRIDE. Default is ISO 25010', choices={'ISO', 'STRIDE'},
                         default='ISO')
+    parser.add_argument('-s', '--squash', help='True/False flag to specify if the quality model should be squashed; '
+                                               'that is, a squashed model ensures that the layer of measures is only 1 node deep. '
+                                               'When the CWE view has multiple layers (such as CWE-1000), the measures layer will consist '
+                                               'of every CWE in 1000, and their parents will be the respective pillar from the view.',
+                        default=False,
+                        action='store_true')
     parser.add_argument('-t', '--number_of_tools',
                         help='The number of tools you are using in your model, as an integer. This number dictates '
                              'the number of diagnostic nodes that are produced, and each diagnostic node is linked to '
@@ -244,6 +267,8 @@ def main():
         product_factors = build_product_factors_from_cwe_pillars(tree)
     factors = FactorNode(tqi, quality_aspects, product_factors)
     measures = build_measures_from_cwe_tree(tree)
+    if args.squash:
+        measures = squash_measures(product_factors, measures)
     diagnostics = build_diagnostics_from_measures(measures, args.number_of_tools)
     model_definition = JSONRoot(args.name, additionalData, global_config, factors, measures, diagnostics)
     export_to_json(args.output, model_definition)

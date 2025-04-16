@@ -219,14 +219,14 @@ def main():
     QUALITY_ASPECT_FUNCTION_MAP = {'ISO': build_iso_quality_aspects,
                                    'STRIDE': build_stride_quality_aspects}
     parser = argparse.ArgumentParser(
-        prog='main.py',
+        prog='process_input.py',
         description='This script converts a CWE view to a PIQUE model definition. '
                     'Input is a xml or csv file (exported from the MITRE CWE database), '
-                    'output is a partial PIQUE model definition file',
+                    '04-product is a partial PIQUE model definition file',
     )
-    parser.add_argument('-i', '--input_file', help='input filename, absolute or relative filepath')
+    parser.add_argument('-i', '--input_file', help='01-input filename, absolute or relative filepath')
     parser.add_argument('-n', '--name', help='name of the model', default="UNNAMED MODEL")
-    parser.add_argument('-o', '--output', help='output filename, extension will be generated')
+    parser.add_argument('-o', '--04-product', help='04-product filename, extension will be generated')
     parser.add_argument('--custom_product_factors', help='True/False flag to specify if the quality model '
                                                          'should be generated using custom product factors, '
                                                          'and not CWE pillars as product factors which is default. Default is false.',

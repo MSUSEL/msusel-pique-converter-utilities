@@ -5,7 +5,7 @@ import re
 def main():
     output_dir = "output/"
     input_dir = "input/CodeSys-KEN-Results/"
-    input_dir_ken = input_dir + str("KEN Results/KEN-output")
+    input_dir_ken = input_dir + str("KEN Results/KEN-04-product")
     input_dir_codesys = input_dir + str("SA_results/SA_results")
     ken_files = os.listdir(input_dir_ken)
     codesys_files = os.listdir(input_dir_codesys)
@@ -16,7 +16,6 @@ def main():
         if not os.path.exists(project_dir):
             os.makedirs(project_dir)
         destination_path = os.path.join(project_dir, str("KEN-") + file)
-        print(destination_path)
         shutil.move(source_path, destination_path)
 
     for file in codesys_files:
@@ -26,7 +25,6 @@ def main():
         if not os.path.exists(project_dir):
             os.makedirs(project_dir)
         destination_path = os.path.join(project_dir, str("CodeSys-") + file)
-        print(destination_path)
         shutil.move(source_path, destination_path)
 
 if __name__ == "__main__":

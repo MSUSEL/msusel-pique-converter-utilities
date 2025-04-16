@@ -18,7 +18,7 @@ def pick_subset(file_name, selection_number):
         # update original data with this deep replacement
         image['versions'] = new_tags
 
-    # create output file path from old filename
+    # create 04-product file path from old filename
     file_name_no_extension = os.path.splitext(file_name)[0]
     with open(file_name_no_extension + '-' + selection_number + '.json', 'w') as f_out:
         # export to json

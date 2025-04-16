@@ -1,0 +1,5 @@
+questions:
+
+is it worth considering relatedVulnerabilities from Grype?
+	- do related vulnerabilities ADD useful information?
+	- Are there differences in the low level data (such as CVSSes) in relatedVulnerabilities from the parent?

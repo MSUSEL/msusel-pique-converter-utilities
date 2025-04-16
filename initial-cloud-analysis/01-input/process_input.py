@@ -30,7 +30,7 @@ def grype_parser(file):
                     related_vulnerabilities.append(grype_finding_appender(related_vulnerability))
             # get location info
             artifacts = []
-            grype_vulns{}
+            # grype_vulns{}
             # grype_vulns[grype_finding_appender(match['vulnerability'], project_name_tag[0], project_name_tag[1],
             #                                   cvsses, artifacts)] = related_vulnerabilities
     return grype_vulns

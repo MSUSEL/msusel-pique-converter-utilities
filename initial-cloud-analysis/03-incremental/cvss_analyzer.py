@@ -97,117 +97,114 @@ def generate_histograms(project_vulns):
     axs[3,1].set_xlabel('Availability category')
     axs[3,1].set_ylabel('Frequency')
     plt.savefig('04-product/histograms.png')
+    plt.savefig('04-product/histograms.pdf')
 
 
-def generate_base_score_violin(project_vulns, score_type):
+def generate_base_score_violin(project_vulns, score_types):
     plt.figure()
-    attack_vector_base_score = defaultdict(list)
-    attack_complexity_base_score = defaultdict(list)
-    privileges_required_base_score = defaultdict(list)
-    user_interaction_base_score = defaultdict(list)
-    scope_base_score = defaultdict(list)
-    confidentiality_base_score = defaultdict(list)
-    integrity_base_score = defaultdict(list)
-    availability_base_score = defaultdict(list)
 
-    for project in project_vulns:
-        for vuln in project_vulns[project]:
-            attack_vector = vuln.get_attack_vector()
-            attack_vector_base_score[attack_vector].append(getattr(vuln, score_type))#    vuln.base_score)
-            attack_complexity = vuln.get_attack_complexity()
-            attack_complexity_base_score[attack_complexity].append(getattr(vuln, score_type))
-            privileges_required = vuln.get_privileges_required()
-            privileges_required_base_score[privileges_required].append(getattr(vuln, score_type))
-            user_interaction = vuln.get_user_interaction()
-            user_interaction_base_score[user_interaction].append(getattr(vuln, score_type))
-            scope = vuln.get_scope()
-            scope_base_score[scope].append(getattr(vuln, score_type))
-            confidentiality = vuln.get_confidentiality()
-            confidentiality_base_score[confidentiality].append(getattr(vuln, score_type))
-            integrity = vuln.get_integrity()
-            integrity_base_score[integrity].append(getattr(vuln, score_type))
-            availability = vuln.get_availability()
-            availability_base_score[availability].append(getattr(vuln, score_type))
-
-    attack_vector_data = list(attack_vector_base_score.values())
-    attack_vector_labels = list(attack_vector_base_score.keys())
-    attack_complexity_data = list(attack_complexity_base_score.values())
-    attack_complexity_labels = list(attack_complexity_base_score.keys())
-    privileges_required_data = list(privileges_required_base_score.values())
-    privileges_required_labels = list(privileges_required_base_score.keys())
-    user_interaction_data = list(user_interaction_base_score.values())
-    user_interaction_labels = list(user_interaction_base_score.keys())
-    scope_data = list(scope_base_score.values())
-    scope_labels = list(scope_base_score.keys())
-    confidentiality_data = list(confidentiality_base_score.values())
-    confidentiality_labels = list(confidentiality_base_score.keys())
-    integrity_data = list(integrity_base_score.values())
-    integrity_labels = list(integrity_base_score.keys())
-    availability_data = list(integrity_base_score.values())
-    availability_labels = list(integrity_base_score.keys())
-
-    fig, axs = plt.subplots(1,8, figsize=(20,8))
-
-    fig.suptitle("Violin plots of CVSS 3.1 Base scores (separated by CVSS attack categories) across Grype findings from the Cloud benchmark dataset (203 docker images)")
+    y_counter = 0
+    fig, axs = plt.subplots(3,8, figsize=(22,17))
+    fig.suptitle("Violin plots of CVSS 3.1 scores (separated by CVSS attack categories) across Grype findings from the Cloud benchmark dataset (203 docker images)")
     fig.supylabel('CVSS 3.1 Base Score')
+    for score_type in score_types:
 
-    axs[0].violinplot(attack_vector_data, positions=range(len(attack_vector_labels)))
-    axs[0].set_xlabel('Attack vector category')
-    axs[0].set_xticks(range(len(attack_vector_labels)))
-    axs[0].set_xticklabels(attack_vector_labels)
+        attack_vector_score = defaultdict(list)
+        attack_complexity_score = defaultdict(list)
+        privileges_required_score = defaultdict(list)
+        user_interaction_score = defaultdict(list)
+        scope_score = defaultdict(list)
+        confidentiality_score = defaultdict(list)
+        integrity_score = defaultdict(list)
+        availability_score = defaultdict(list)
 
-    axs[1].violinplot(attack_complexity_data, positions=range(len(attack_complexity_labels)))
-    axs[1].set_xlabel('Attack complexity category')
-    axs[1].set_xticks(range(len(attack_complexity_labels)))
-    axs[1].set_xticklabels(attack_complexity_labels)
+        for project in project_vulns:
+            for vuln in project_vulns[project]:
+                attack_vector = vuln.get_attack_vector()
+                attack_vector_score[attack_vector].append(getattr(vuln, score_type))
+                attack_complexity = vuln.get_attack_complexity()
+                attack_complexity_score[attack_complexity].append(getattr(vuln, score_type))
+                privileges_required = vuln.get_privileges_required()
+                privileges_required_score[privileges_required].append(getattr(vuln, score_type))
+                user_interaction = vuln.get_user_interaction()
+                user_interaction_score[user_interaction].append(getattr(vuln, score_type))
+                scope = vuln.get_scope()
+                scope_score[scope].append(getattr(vuln, score_type))
+                confidentiality = vuln.get_confidentiality()
+                confidentiality_score[confidentiality].append(getattr(vuln, score_type))
+                integrity = vuln.get_integrity()
+                integrity_score[integrity].append(getattr(vuln, score_type))
+                availability = vuln.get_availability()
+                availability_score[availability].append(getattr(vuln, score_type))
 
-    axs[2].violinplot(privileges_required_data, positions=range(len(privileges_required_labels)))
-    axs[2].set_xlabel('Privileges required category')
-    axs[2].set_xticks(range(len(privileges_required_labels)))
-    axs[2].set_xticklabels(privileges_required_labels)
+        attack_vector_data = list(attack_vector_score.values())
+        attack_vector_labels = list(attack_vector_score.keys())
+        attack_complexity_data = list(attack_complexity_score.values())
+        attack_complexity_labels = list(attack_complexity_score.keys())
+        privileges_required_data = list(privileges_required_score.values())
+        privileges_required_labels = list(privileges_required_score.keys())
+        user_interaction_data = list(user_interaction_score.values())
+        user_interaction_labels = list(user_interaction_score.keys())
+        scope_data = list(scope_score.values())
+        scope_labels = list(scope_score.keys())
+        confidentiality_data = list(confidentiality_score.values())
+        confidentiality_labels = list(confidentiality_score.keys())
+        integrity_data = list(integrity_score.values())
+        integrity_labels = list(integrity_score.keys())
+        availability_data = list(availability_score.values())
+        availability_labels = list(availability_score.keys())
 
-    axs[3].violinplot(user_interaction_data, positions=range(len(user_interaction_labels)))
-    axs[3].set_xlabel('User interaction category')
-    axs[3].set_xticks(range(len(user_interaction_labels)))
-    axs[3].set_xticklabels(user_interaction_labels)
+        axs[y_counter, 0].violinplot(attack_vector_data, positions=range(len(attack_vector_labels)))
+        axs[y_counter, 0].set_xlabel('Attack vector category')
+        axs[y_counter, 0].set_xticks(range(len(attack_vector_labels)))
+        axs[y_counter, 0].set_xticklabels(attack_vector_labels)
 
-    axs[4].violinplot(scope_data, positions=range(len(scope_labels)))
-    axs[4].set_xlabel('Scope category')
-    axs[4].set_xticks(range(len(scope_labels)))
-    axs[4].set_xticklabels(scope_labels)
+        axs[y_counter, 1].violinplot(attack_complexity_data, positions=range(len(attack_complexity_labels)))
+        axs[y_counter, 1].set_xlabel('Attack complexity category')
+        axs[y_counter, 1].set_xticks(range(len(attack_complexity_labels)))
+        axs[y_counter, 1].set_xticklabels(attack_complexity_labels)
 
-    axs[5].violinplot(confidentiality_data, positions=range(len(confidentiality_labels)))
-    axs[5].set_xlabel('Confidentiality category')
-    axs[5].set_xticks(range(len(confidentiality_labels)))
-    axs[5].set_xticklabels(confidentiality_labels)
+        axs[y_counter, 2].violinplot(privileges_required_data, positions=range(len(privileges_required_labels)))
+        axs[y_counter, 2].set_xlabel('Privileges required category')
+        axs[y_counter, 2].set_xticks(range(len(privileges_required_labels)))
+        axs[y_counter, 2].set_xticklabels(privileges_required_labels)
 
-    axs[6].violinplot(integrity_data, positions=range(len(integrity_labels)))
-    axs[6].set_xlabel('Integrity category')
-    axs[6].set_xticks(range(len(integrity_labels)))
-    axs[6].set_xticklabels(integrity_labels)
+        axs[y_counter, 3].violinplot(user_interaction_data, positions=range(len(user_interaction_labels)))
+        axs[y_counter, 3].set_xlabel('User interaction category')
+        axs[y_counter, 3].set_xticks(range(len(user_interaction_labels)))
+        axs[y_counter, 3].set_xticklabels(user_interaction_labels)
 
-    axs[7].violinplot(availability_data, positions=range(len(availability_labels)))
-    axs[7].set_xlabel('Availability category')
-    axs[7].set_xticks(range(len(availability_labels)))
-    axs[7].set_xticklabels(availability_labels)
+        axs[y_counter, 4].violinplot(scope_data, positions=range(len(scope_labels)))
+        axs[y_counter, 4].set_xlabel('Scope category')
+        axs[y_counter, 4].set_xticks(range(len(scope_labels)))
+        axs[y_counter, 4].set_xticklabels(scope_labels)
 
-    plt.savefig("04-product/violin_" + str(score_type) + ".png")
+        axs[y_counter, 5].violinplot(confidentiality_data, positions=range(len(confidentiality_labels)))
+        axs[y_counter, 5].set_xlabel('Confidentiality category')
+        axs[y_counter, 5].set_xticks(range(len(confidentiality_labels)))
+        axs[y_counter, 5].set_xticklabels(confidentiality_labels)
 
-    return plt
+        axs[y_counter, 6].violinplot(integrity_data, positions=range(len(integrity_labels)))
+        axs[y_counter, 6].set_xlabel('Integrity category')
+        axs[y_counter, 6].set_xticks(range(len(integrity_labels)))
+        axs[y_counter, 6].set_xticklabels(integrity_labels)
+
+        axs[y_counter, 7].violinplot(availability_data, positions=range(len(availability_labels)))
+        axs[y_counter, 7].set_xlabel('Availability category')
+        axs[y_counter, 7].set_xticks(range(len(availability_labels)))
+        axs[y_counter, 7].set_xticklabels(availability_labels)
+
+        axs[y_counter, 0].set_ylabel(str(score_type))
+        y_counter = y_counter+1
+    plt.savefig("04-product/violins.png")
+    plt.savefig("04-product/violins.pdf")
 
 def generate_violins(project_vulns):
     plt.figure()
 
-    base_score_violin = generate_base_score_violin(project_vulns, score_type="base_score")
-    exploitability_score_violin = generate_base_score_violin(project_vulns, score_type="exploitability_score")
-    impact_score_violin = generate_base_score_violin(project_vulns, score_type="impact_score")
+    score_types = ["base_score", "exploitability_score", "impact_score"]
 
-    fig, axs = plt.subplots(1,3, figsize=(20,8))
-    axs[0] = base_score_violin
-    axs[1] = exploitability_score_violin
-    axs[2] = impact_score_violin
-
-    plt.savefig("04-product/violins.png")
+    generate_base_score_violin(project_vulns, score_types)
 
 
 def cvss_analyzer(in_dir):

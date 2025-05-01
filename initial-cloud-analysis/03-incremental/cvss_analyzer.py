@@ -201,11 +201,30 @@ def generate_base_score_violin(project_vulns, score_types):
 
 def generate_violins(project_vulns):
     plt.figure()
-
     score_types = ["base_score", "exploitability_score", "impact_score"]
-
     generate_base_score_violin(project_vulns, score_types)
 
+
+def generate_score_distributions(project_vulns):
+    plt.figure()
+    base_score = []
+    exploitability_score = []
+    impact_score = []
+    for project in project_vulns:
+        for vuln in project_vulns[project]:
+            base_score.append(vuln.base_score)
+            exploitability_score.append(vuln.exploitability_score)
+            impact_score.append(vuln.impact_score)
+    fig, axs = plt.subplots(1,3, figsize=(22,17))
+
+    axs[0].hist(base_score, bins=50)
+    axs[0].set_xlabel('Base score')
+    axs[1].hist(exploitability_score, bins=50)
+    axs[1].set_xlabel('Exploitability score')
+    axs[2].hist(impact_score, bins=50)
+    axs[2].set_xlabel('Impact score')
+
+    plt.savefig("04-product/histogram-counts")
 
 def cvss_analyzer(in_dir):
     root_dir = pathlib.Path(in_dir)
@@ -221,6 +240,7 @@ def cvss_analyzer(in_dir):
 
     generate_histograms(project_vulns)
     generate_violins(project_vulns)
+    generate_score_distributions(project_vulns)
 
 class Vuln:
     def __init__(self, id, cvss_vector, base_score, exploitability_score, impact_score):
